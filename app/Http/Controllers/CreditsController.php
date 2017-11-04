@@ -13,7 +13,7 @@ class CreditsController extends Controller
      */
     public function index()
     {
-         return view('uploadfile'); 
+         return view('uploadfile');
     }
 
     /**
@@ -37,52 +37,19 @@ class CreditsController extends Controller
         //get file
         $upload=$request->file('upload-file');
         $filePath=$upload->getRealPath();
-        //open and read
-        $file=fopen($filePath, 'r');
 
-        $header= fgetcsv($file);
 
-        // dd($header);
-        $escapedHeader=[];
-        //validate
-        foreach ($header as $key => $value) {
-            $lheader=strtolower($value);
-            $escapedItem=preg_replace('/[^a-z]/', '', $lheader);
-            array_push($escapedHeader, $escapedItem);
-        }
+        $homepage = file_get_contents('$filePath');
+            echo $homepage;
 
-        //looping through othe columns
-        while($columns=fgetcsv($file))
-        {
-            if($columns[0]=="")
-            {
-                continue;
-            }
-            //trim data
-            foreach ($columns as $key => &$value) {
-                $value=preg_replace('/\D/','',$value);
-            }
+        // //open and read
+        // $file=fopen($filePath, 'r') or die("Couldn't open $filename");
+        // while (!feof($file)) {
+        //     $buffer = fread($file, 4096);  // use a buffer of 4KB
+        //     $buffer = str_replace($old,$new,$buffer);
+        //     ///
+        // }
 
-           $data= array_combine($escapedHeader, $columns);
-
-           // setting type
-           foreach ($data as $key => &$value) {
-            $value=($key=="zip" || $key=="month")?(integer)$value: (float)$value;
-           }
-
-           // Table update
-           $zip=$data['zip'];
-           $month=$data['month'];
-           $lodging=$data['lodging'];
-           $meal=$data['meal'];
-           $housing=$data['housing'];
-
-           $budget= Budget::firstOrNew(['zip'=>$zip,'month'=>$month]);
-           $budget->lodging=$lodging;
-           $budget->meal=$meal;
-           $budget->housing=$housing;
-           $budget->save();
-        }
     }
 
     /**
