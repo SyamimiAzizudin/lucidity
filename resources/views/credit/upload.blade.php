@@ -12,13 +12,13 @@
       			<div class="col-xs-12 col-sm-12 col-md-12">
 
 					<div class="col-lg-11 col-centered">
-	      				<form action="{{url('/upload')}}" method="post" enctype="multipart/form-data">
+						<h3>Upload a File</h3>
+	      				<form action="/credits" method="post" enctype="multipart/form-data">
 						    {{csrf_field()}}
 						        <div class="form-group">
-						            <label for="upload-file">Upload</label>
-						            <input type="file" name="upload-file" class="form-control">
+						            <input type="file" name="credit" class="form-control">
 						        </div>
-						        <input class="btn btn-success" type="submit" value="Upload File" name="submit">
+						        <input class="btn btn-primary" type="submit" value="Upload File" name="submit">
 	    				</form>
 					</div
 

@@ -1,5 +1,7 @@
 <?php
 
+Auth::loginUsingId(1);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,13 +18,21 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth']], function() {
-	
-    Route::get('/home', 'HomeController@index')->name('home');    
-	Route::get('/credit', 'CreditsController@index'); 
+
+    Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/credit', 'CreditsController@index');
 
 });
 
-Route::get('upload', 'CreditsController@index');
-Route::post('upload', 'CreditsController@store');
+Route::post('credits', function() {
+
+    $file = request()->file('credit');
+
+    $ext = $file->guessClientExtension();
+
+    $file->storeAs('credits/'. auth()->id(), "credit.{$ext}");
+
+    return back();
+});
 
 Auth::routes();

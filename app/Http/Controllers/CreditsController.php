@@ -13,7 +13,7 @@ class CreditsController extends Controller
      */
     public function index()
     {
-         return view('uploadfile');
+         return view('credit.upload');
     }
 
     /**
@@ -35,9 +35,8 @@ class CreditsController extends Controller
     public function store(Request $request)
     {
         //get file
-        $upload=$request->file('upload-file');
+        $upload=$request->file('credit');
         $filePath=$upload->getRealPath();
-
 
         $homepage = file_get_contents('$filePath');
             echo $homepage;
@@ -49,6 +48,8 @@ class CreditsController extends Controller
         //     $buffer = str_replace($old,$new,$buffer);
         //     ///
         // }
+        //
+        // return $request->file('upload-file');
 
     }
 
