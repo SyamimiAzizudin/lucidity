@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use File;
 
 class CreditsController extends Controller
 {
@@ -34,22 +36,22 @@ class CreditsController extends Controller
      */
     public function store(Request $request)
     {
-        //get file
-        $upload=$request->file('credit');
-        $filePath=$upload->getRealPath();
 
-        $homepage = file_get_contents('$filePath');
-            echo $homepage;
-
-        // //open and read
-        // $file=fopen($filePath, 'r') or die("Couldn't open $filename");
-        // while (!feof($file)) {
-        //     $buffer = fread($file, 4096);  // use a buffer of 4KB
-        //     $buffer = str_replace($old,$new,$buffer);
-        //     ///
-        // }
+        // $contents = File::get(storage_path('app/credits/1/credit.txt'));
         //
-        // return $request->file('upload-file');
+        // foreach(preg_split("/((\r?\n)|(\r\n?))/", $contents) as $line){
+        //     // Buat logic untuk baris plak
+        //     dd($line);
+        // }
+
+        Route::get('read', function () {
+        $contents = File::get(storage_path('app/credits/1/credit.txt'));
+
+            foreach(preg_split("/((\r?\n)|(\r\n?))/", $contents) as $line) {
+                // Buat logic untuk baris plak
+                dd(explode(':', $line));
+            }
+        });
 
     }
 
